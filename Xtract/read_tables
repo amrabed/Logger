@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# This script reads database tables for the Xtract tool
+#
+# Written by Amr S. Abed <amrabed@vt.edu> 
+# 
+# Last updated August 21, 2013
+#
+
+# *******************     Helper Function     ******************* #
+
+sql2csv ()
+{
+# sqlite3 log.db ".header on"
+# sqlite3 log.db ".mode csv"
+# sqlite3 log.db ".output $2"
+sqlite3 "$2" "select * from $1;"
+}
+
+# *******************        Entry Point       ******************* #
+
+#read_tables ()
+{
+if [ -d "csv" ]; then
+  rm -r csv
+fi
+mkdir csv
+cp "$1" csv
+cp ../Xtract.class csv
+cd csv
+
+sql2csv Applications "$1" > applications.csv
+
+sql2csv Bluetooth "$1" > bluetooth.csv
+
+sql2csv Browser "$1" > browser.csv
+
+sql2csv Calls "$1" > calls.csv
+
+sql2csv Devices "$1" > devices.csv
+
+sql2csv Files "$1" > files.csv
+
+sql2csv Location "$1" > location.csv
+
+sql2csv Mobile "$1" > mobile.csv
+
+sql2csv Modes "$1" > modes.csv
+
+sql2csv Power "$1" > power.csv
+
+sql2csv WiFi "$1"  > wifi.csv
+
+sql2csv Messages "$1" > messages.csv
+
+#sql2csv Usb "$1" > usb.csv
+
+mkdir output
+java Xtract messages wifi power modes mobile location files devices calls browser bluetooth applications
+sqlite3 "$1" ".quit"
+}

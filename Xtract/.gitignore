@@ -1,0 +1,7 @@
+output/
+input/
+ftp/
+
+*.class
+
+.DS_Store

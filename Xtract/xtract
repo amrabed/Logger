@@ -1,0 +1,98 @@
+#!/bin/bash
+#
+# The is the main script for the Xtract tool
+#
+# Written by Amr S. Abed <amrabed@vt.edu> 
+# 
+# Last updated August 21, 2013
+#
+
+cd "$(dirname "$0")"
+
+myPath=$(cd "$(dirname "$0")"; pwd)
+output="$myPath"/output
+input="$myPath"/input
+path=""
+
+# *******************     Helper Functions     ******************* #
+
+usage () 
+{
+  help
+  exit 127
+}
+
+help () 
+{
+  echo
+  echo "Usage: $0 path_to_DB_files"
+  echo "or"
+  echo "       $0 -h   (for help)"
+  echo
+}
+
+
+readArguments ()
+{
+  if [ $# -eq 0 ]; then usage; fi
+  while [ "$1" != "" ] ; do
+    case $1 in
+      -h | -H )	  help ; exit ;;
+            * )  path=$1; shift ;; 
+    esac
+  done
+}
+
+# *******************        Main Functions       ******************* #
+copyInputFiles()
+{
+echo Copying input files ...
+if [ -d "input" ]; then
+  rm -rf input
+fi
+mkdir input
+
+cd "$path"
+for file in *; do
+  if [ -d $file ]; then
+    #echo Copying input file $file ...
+    cd "$file"
+    if [[ -s "log.db" ]]; then
+      cp log.db "$input/$file.db"
+    fi
+    cd ..
+  fi
+done
+}
+
+createOutputFiles()
+{
+ echo
+echo Creating output folder
+if [ -d "output" ]; then
+  rm -rf output
+fi
+mkdir output
+
+
+cd "$input"
+for file in *; do
+  if [ -s $file ]; then
+    echo
+    echo Extracting data from $file ...
+    ../read_tables "$file"
+    cp -a csv/output/. "$output/$file"
+    rm -fr csv
+  fi
+done
+}
+
+# *******************        Entry Point       ******************* #
+
+readArguments $@
+
+copyInputFiles 
+cd "$myPath"
+javac Xtract.java
+createOutputFiles
+
