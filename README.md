@@ -1,6 +1,7 @@
 # Logger
 [![Known Vulnerabilities](https://snyk.io/test/github/amrabed/Logger/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/amrabed/Logger?targetFile=pom.xml)
 
+> This application was created as part of my research at Virginia Tech. The application and the whole project is no longer active. Files of the project are left here for legacy reasons.
 
 <p>Logger collects anonymous mobile-usage data as part of a research study approved by the <a href=http://www.irb.vt.edu/pages/about.htm target="_blank">Virginia Tech IRB</a></p> 
 
@@ -11,5 +12,3 @@ The application collects anonymous usage data (e.g. location, browsing, communic
 ~~Before installing the application, please read carefully the [[recruitment letter]](RecruitmentLetter.pdf) for more details and instructions.~~
 
 Please feel free to contact me anytime via <a href=mailto:amrabed@vt.edu target="_blank">email</a> for any details or concerns.
-
-> This application was created as part of my research at Virginia Tech. The application and the whole project is no longer active. Files of the project are left here for legacy reasons.
