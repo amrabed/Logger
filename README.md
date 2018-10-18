@@ -1,4 +1,6 @@
 <h1>Logger</h1>
+[![Known Vulnerabilities](https://snyk.io/test/github/amrabed/Logger/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/amrabed/Logger?targetFile=pom.xml)
+
 <p>Logger collects anonymous mobile-usage data as part of a research study approved by the <a href=http://www.irb.vt.edu/pages/about.htm target="_blank">Virginia Tech IRB</a></p> 
 
 As described in the <a href=https://docs.google.com/file/d/0B7bc1n6iTHrGM0tWSDhxcjhROFU/edit?usp=sharing target="_blank">recruitment letter</a>, volunteer smartphone users are requested to install this <a href=https://play.google.com/store/apps/details?id=org.magnum.logger target="_blank">Android application</a> (available on the <a href=https://play.google.com/store/apps/details?id=org.magnum.logger target="_blank">Google Play Store</a>) on their daily-use Android smartphones, and allow it to run without interruption. 
