@@ -1,5 +1,6 @@
-<h1>Logger</h1>
+# Logger
 [![Known Vulnerabilities](https://snyk.io/test/github/amrabed/Logger/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/amrabed/Logger?targetFile=pom.xml)
+
 
 <p>Logger collects anonymous mobile-usage data as part of a research study approved by the <a href=http://www.irb.vt.edu/pages/about.htm target="_blank">Virginia Tech IRB</a></p> 
 
