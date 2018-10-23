@@ -1,17 +1,17 @@
 package org.magnum.logger.connectivity.bluetooth;
 
-import org.magnum.logger.Encryptor;
-
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
 public class BluetoothHandler extends BroadcastReceiver
 {
 
-	final static String TAG = "BLUETOOTH";
+	private static final String TAG = BluetoothHandler.class.getCanonicalName();
 
 	@Override
 	public void onReceive(Context context, Intent intent)

@@ -1,17 +1,17 @@
 package org.magnum.logger.device.modes;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class ModeTable extends Database
 {
 
 	private static final String TABLE_NAME = "Modes";
-	private static final String COLUMN_NAMES[] = { "Time", "Mode" };
+	private static final String[] COLUMN_NAMES = {"Time", "Mode"};
 
-	public ModeTable(Context context)
+	ModeTable(Context context)
 	{
 		super(context);
 	}

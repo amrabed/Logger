@@ -1,17 +1,17 @@
 package org.magnum.logger.connectivity.mobile;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class MobileTable extends Database
 {
 
 	private static final String TABLE_NAME = "Mobile";
-	private static final String COLUMN_NAMES[] = { "Time", "CellID", "Type" };
+	private static final String[] COLUMN_NAMES = {"Time", "CellID", "Type"};
 
-	public MobileTable(Context context)
+	MobileTable(Context context)
 	{
 		super(context);
 	}

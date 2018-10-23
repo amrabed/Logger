@@ -1,17 +1,17 @@
 package org.magnum.logger.user.applications;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class ApplicationTable extends Database
 {
 
 	private static final String TABLE_NAME = "Applications";
-	private static final String COLUMN_NAMES[] = { "Time", "AppID", "AccessType" };
+	private static final String[] COLUMN_NAMES = {"Time", "AppID", "AccessType"};
 
-	public ApplicationTable(Context context)
+	ApplicationTable(Context context)
 	{
 		super(context);
 	}

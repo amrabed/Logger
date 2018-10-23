@@ -1,17 +1,17 @@
 package org.magnum.logger.connectivity.wifi;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class WifiTable extends Database
 {
 
 	private static final String TABLE_NAME = "WiFi";
-	private static final String COLUMN_NAMES[] = { "Time", "BSSID" };
+	private static final String[] COLUMN_NAMES = {"Time", "BSSID"};
 
-	public WifiTable(Context context)
+	WifiTable(Context context)
 	{
 		super(context);
 	}

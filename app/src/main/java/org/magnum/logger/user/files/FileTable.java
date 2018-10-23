@@ -1,17 +1,17 @@
 package org.magnum.logger.user.files;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class FileTable extends Database
 {
 
 	private static final String TABLE_NAME = "Files";
-	private static final String COLUMN_NAMES[] = { "Time", "FileID", "AccessType" };
+	private static final String[] COLUMN_NAMES = {"Time", "FileID", "AccessType"};
 
-	public FileTable(Context context)
+	FileTable(Context context)
 	{
 		super(context);
 	}

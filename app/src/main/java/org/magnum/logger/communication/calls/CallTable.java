@@ -1,17 +1,17 @@
 package org.magnum.logger.communication.calls;
 
-import org.magnum.logger.Database;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.magnum.logger.Database;
+
 public class CallTable extends Database
 {
 	private static final String TABLE_NAME = "Calls";
-	private static final String COLUMN_NAMES[] = { "Time", "CallID", "Incoming", "Duration" };
+	private static final String[] COLUMN_NAMES = {"Time", "CallID", "Incoming", "Duration"};
 
-	public CallTable(Context context)
+	CallTable(Context context)
 	{
 		super(context);
 	}

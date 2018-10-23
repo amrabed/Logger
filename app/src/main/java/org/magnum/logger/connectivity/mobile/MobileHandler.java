@@ -1,7 +1,5 @@
 package org.magnum.logger.connectivity.mobile;
 
-import org.magnum.logger.Encryptor;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,12 +11,15 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+import org.magnum.logger.device.modes.ModeHandler;
+
 public class MobileHandler extends PhoneStateListener
 {
 
-	final static String TAG = "MOBILE";
+	private static final String TAG = ModeHandler.class.getCanonicalName();
 
-	Context context;
+	private Context context;
 
 	public MobileHandler(Context context)
 	{

@@ -1,9 +1,5 @@
 package org.magnum.logger;
 
-import org.magnum.logger.communication.calls.CallLogReader;
-import org.magnum.logger.communication.messaging.MessageListReader;
-import org.magnum.logger.connectivity.bluetooth.PairedDeviceReader;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +7,14 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.magnum.logger.communication.calls.CallLogReader;
+import org.magnum.logger.communication.messaging.MessageListReader;
+import org.magnum.logger.connectivity.bluetooth.PairedDeviceReader;
+
 public class Main extends Activity
 {
-	final static String TAG = "firstTime";
-	static boolean isAlreadyRunning = false;
+	private static final String TAG = "firstTime";
+	private boolean isAlreadyRunning = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

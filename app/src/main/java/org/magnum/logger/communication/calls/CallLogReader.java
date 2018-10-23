@@ -1,7 +1,5 @@
 package org.magnum.logger.communication.calls;
 
-import org.magnum.logger.Encryptor;
-
 import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,9 +7,11 @@ import android.os.IBinder;
 import android.provider.CallLog;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
 public class CallLogReader extends Service
 {
-	final static String TAG = "CALL_";
+	private static final String TAG = CallLogReader.class.getCanonicalName();
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)

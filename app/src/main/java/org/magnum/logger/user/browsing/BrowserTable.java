@@ -1,17 +1,17 @@
 package org.magnum.logger.user.browsing;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class BrowserTable extends Database
 {
 
 	private static final String TABLE_NAME = "Browser";
-	private static final String COLUMN_NAMES[] = { "Time", "Address" };
+	private static final String[] COLUMN_NAMES = {"Time", "Address"};
 
-	public BrowserTable(Context context)
+	BrowserTable(Context context)
 	{
 		super(context);
 	}

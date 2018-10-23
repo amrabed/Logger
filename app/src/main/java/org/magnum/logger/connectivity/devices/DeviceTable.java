@@ -1,17 +1,17 @@
 package org.magnum.logger.connectivity.devices;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class DeviceTable extends Database
 {
 
 	private static final String TABLE_NAME = "Devices";
-	private static final String COLUMN_NAMES[] = { "Time", "DeviceID", "Change" };
+	private static final String[] COLUMN_NAMES = {"Time", "DeviceID", "Change"};
 
-	public DeviceTable(Context context)
+	DeviceTable(Context context)
 	{
 		super(context);
 	}

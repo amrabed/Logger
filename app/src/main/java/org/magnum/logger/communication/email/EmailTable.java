@@ -1,16 +1,16 @@
 package org.magnum.logger.communication.email;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class EmailTable extends Database
 {
 	private static final String TABLE_NAME = "Email";
-	private static final String COLUMN_NAMES[] = { "Time", "Address"};// , "Received" };
+	private static final String[] COLUMN_NAMES = {"Time", "Address"};
 
-	public EmailTable(Context context)
+	EmailTable(Context context)
 	{
 		super(context);
 	}

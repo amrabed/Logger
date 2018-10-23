@@ -1,22 +1,26 @@
 package org.magnum.logger;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import android.content.Context;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
 public class Encryptor
 {
+	private static final String TAG = "ENCRYPT";
+	private static final String ENCODING = "US-ASCII";
+	private static final String ALGORITHM = "HmacSHA256";
 
 	private static boolean isDebugging = true;
-	public static String TAG = "ENCRYPT";
-	private static final String ENCODING = "US-ASCII";
-	private static String ALGORITHM = "HmacSHA256";
+
+	private Encryptor()
+	{
+	}
 
 	public static String encryptPhoneNumber(String number, Context context)
 	{
@@ -83,8 +87,8 @@ public class Encryptor
 		return "";
 
 	}
-	
-	public static String hash(String data, Context context)
+
+	public static String hash(String data)
 	{
 		if (isDebugging)
 		{
@@ -103,9 +107,9 @@ public class Encryptor
 		{
 			Log.e(TAG, e.toString());
 		}
-		return "";	
+		return "";
 	}
-	
+
 	private static Integer getSalt(Context context)
 	{
 		Integer salt;
@@ -139,7 +143,7 @@ public class Encryptor
 			return map.get(iso);
 		}
 
-		final private static String[] ISO = { "AF",// 93
+		private static final String[] ISO = {"AF",// 93
 				"AL",// 355
 				"DZ",// 213
 				"AD",// 376
@@ -346,7 +350,7 @@ public class Encryptor
 				"ZM",// 260
 				"ZW",// 263
 		};
-		final private static int CODE[] = { 93,// AF
+		private static final int[] CODE = {93,// AF
 				355,// AL
 				213,// DZ
 				376,// AD

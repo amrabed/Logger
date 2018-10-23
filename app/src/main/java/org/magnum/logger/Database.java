@@ -1,7 +1,10 @@
 package org.magnum.logger;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import org.magnum.logger.communication.calls.CallTable;
 import org.magnum.logger.communication.email.EmailTable;
@@ -17,17 +20,14 @@ import org.magnum.logger.user.browsing.BrowserTable;
 import org.magnum.logger.user.files.FileTable;
 import org.magnum.logger.user.location.LocationTable;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Database extends SQLiteOpenHelper
 {
 
 	private static final int VERSION = 1;
-	public static final String NAME = "log.db";
+	private static final String NAME = "log.db";
 
 	public Database(Context context)
 	{
@@ -67,10 +67,10 @@ public abstract class Database extends SQLiteOpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-		final String TABLE_NAMES[] = { "Applications", "Bluetooth", "Browser", "Calls", "Devices", "Events", "Files", "Location", "Mobile", "Modes", "Power", "WiFi" };
-		for (int i = 0; i < TABLE_NAMES.length; i++)
+		final String[] tableNames = {"Applications", "Bluetooth", "Browser", "Calls", "Devices", "Events", "Files", "Location", "Mobile", "Modes", "Power", "WiFi"};
+		for (String tableName : tableNames)
 		{
-			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAMES[i]);
+			db.execSQL("DROP TABLE IF EXISTS " + tableName);
 		}
 		onCreate(db);
 	}
@@ -127,7 +127,7 @@ public abstract class Database extends SQLiteOpenHelper
 		return cursor.getCount();
 	}
 
-	static class Entry extends ArrayList<String>
+	private static class Entry extends ArrayList<String>
 	{
 		private static final long serialVersionUID = 1L;
 	}

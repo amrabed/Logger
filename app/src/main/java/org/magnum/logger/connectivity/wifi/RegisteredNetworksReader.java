@@ -1,9 +1,5 @@
 package org.magnum.logger.connectivity.wifi;
 
-import java.util.List;
-
-import org.magnum.logger.Encryptor;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +8,13 @@ import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
+import java.util.List;
+
 public class RegisteredNetworksReader extends Service
 {
-	final static String TAG = "WIFI_";
+	private static final String TAG = RegisteredNetworksReader.class.getCanonicalName();
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -27,11 +27,14 @@ public class RegisteredNetworksReader extends Service
 				try
 				{
 					long time = System.currentTimeMillis();
-					WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-					List<WifiConfiguration> wifiList = manager.getConfiguredNetworks();
-					for(WifiConfiguration wifi : wifiList)
+					final WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+					if (manager != null)
 					{
-						new WifiTable(getApplicationContext()).insert(time, Encryptor.encrypt(wifi.BSSID,getApplicationContext()));
+						final List<WifiConfiguration> wifiList = manager.getConfiguredNetworks();
+						for (WifiConfiguration wifi : wifiList)
+						{
+							new WifiTable(getApplicationContext()).insert(time, Encryptor.encrypt(wifi.BSSID, getApplicationContext()));
+						}
 					}
 				}
 				catch (Exception e)
@@ -43,7 +46,7 @@ public class RegisteredNetworksReader extends Service
 		t.start();
 		return START_NOT_STICKY;
 	}
-	
+
 	@Override
 	public IBinder onBind(Intent arg0)
 	{

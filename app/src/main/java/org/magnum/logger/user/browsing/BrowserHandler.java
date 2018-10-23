@@ -1,7 +1,5 @@
 package org.magnum.logger.user.browsing;
 
-import org.magnum.logger.Encryptor;
-
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -10,11 +8,13 @@ import android.preference.PreferenceManager;
 import android.provider.Browser;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
 public class BrowserHandler extends ContentObserver
 {
 
-	final static String TAG = "BROWSER";
-	Context context;
+	private static final String TAG = BrowserHandler.class.getCanonicalName();
+	private final Context context;
 
 	public BrowserHandler(Context context, Handler handler)
 	{
@@ -29,10 +29,10 @@ public class BrowserHandler extends ContentObserver
 		try
 		{
 			Cursor cursor = context.getContentResolver().query(Browser.BOOKMARKS_URI, Browser.HISTORY_PROJECTION, null, null, null);
-			if (cursor.moveToFirst() && cursor.getCount() > 0)
+			if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0)
 			{
-				long time = 0;
-				String url = null;
+				long time;
+				String url;
 				while (!cursor.isAfterLast())
 				{
 
@@ -40,7 +40,7 @@ public class BrowserHandler extends ContentObserver
 					url = cursor.getString(Browser.HISTORY_PROJECTION_URL_INDEX);
 					int i = url.indexOf('/');
 					int j = url.indexOf('/', i + 2);
-					String domain = null;
+					String domain;
 					if(j != -1)
 					{
 						domain = url.substring(i + 2, j);
@@ -58,8 +58,8 @@ public class BrowserHandler extends ContentObserver
 					}
 					cursor.moveToNext();
 				}
+				cursor.close();
 			}
-			cursor.close();
 		}
 		catch (Exception e)
 		{

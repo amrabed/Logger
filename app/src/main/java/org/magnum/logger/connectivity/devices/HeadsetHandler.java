@@ -9,7 +9,7 @@ import android.util.Log;
 public class HeadsetHandler extends BroadcastReceiver
 {
 
-	final static String TAG = "HEADSET";
+	private static final String TAG = HeadsetHandler.class.getCanonicalName();
 
 	@Override
 	public void onReceive(Context context, Intent intent)

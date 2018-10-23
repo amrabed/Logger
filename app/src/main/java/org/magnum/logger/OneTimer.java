@@ -1,8 +1,5 @@
 package org.magnum.logger;
 
-import org.magnum.logger.user.applications.RunningApplicationHandler;
-import org.magnum.logger.user.location.LocationHandler;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -12,9 +9,12 @@ import android.location.LocationManager;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.magnum.logger.user.applications.RunningApplicationHandler;
+import org.magnum.logger.user.location.LocationHandler;
+
 public class OneTimer extends Service
 {
-	final static String TAG = "ONETIME";
+	private static final String TAG = OneTimer.class.getCanonicalName();
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -36,14 +36,20 @@ public class OneTimer extends Service
 	private void monitorLocation()
 	{
 		LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1610, new LocationHandler(getApplicationContext()));
+		if (manager != null)
+		{
+			manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1610, new LocationHandler(getApplicationContext()));
+		}
 	}
 
 	private void monitorApps()
 	{
 		PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, new Intent(this, RunningApplicationHandler.class), 0);
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15, pendingIntent);
+		if (alarmManager != null)
+		{
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15, pendingIntent);
+		}
 	}
 
 	@Override

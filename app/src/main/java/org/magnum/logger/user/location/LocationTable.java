@@ -1,17 +1,17 @@
 package org.magnum.logger.user.location;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class LocationTable extends Database
 {
 
 	private static final String TABLE_NAME = "Location";
-	private static final String COLUMN_NAMES[] = { "Time", "Distance1", "Distance2", "Distance3" };
+	private static final String[] COLUMN_NAMES = {"Time", "Distance1", "Distance2", "Distance3"};
 
-	public LocationTable(Context context)
+	LocationTable(Context context)
 	{
 		super(context);
 	}

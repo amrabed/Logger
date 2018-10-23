@@ -1,17 +1,17 @@
 package org.magnum.logger.connectivity.usb;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class UsbTable extends Database
 {
 
 	private static final String TABLE_NAME = "Bluetooth";
-	private static final String COLUMN_NAMES[] = { "Time", "Name", "Class",  "Change" };
+	private static final String[] COLUMN_NAMES = {"Time", "Name", "Class", "Change"};
 
-	public UsbTable(Context context)
+	UsbTable(Context context)
 	{
 		super(context);
 	}

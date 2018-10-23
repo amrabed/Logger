@@ -1,11 +1,5 @@
 package org.magnum.logger.user.applications;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.magnum.logger.Encryptor;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Service;
@@ -14,11 +8,23 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class RunningApplicationHandler extends Service
 {
 
-	final static String TAG = "APPLICATION";
-	static Collection<String> packageList = new ArrayList<String>();
+	private static final String TAG = RunningApplicationHandler.class.getCanonicalName();
+	private static ArrayList<String> packageList = new ArrayList<String>();
+
+	public static List<String> subtractSets(List<String> a, List<String> b)
+	{
+		ArrayList<String> result = new ArrayList<String>(b);
+		result.removeAll(a);
+		return result;
+	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -47,15 +53,19 @@ public class RunningApplicationHandler extends Service
 //						}
 //					}
 //
-					final List<RunningTaskInfo> runningTasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
-					for (int i = 0; i < runningTasks.size(); i++)
+					if (activityManager != null)
 					{
-						String packageName = runningTasks.get(i).baseActivity.getPackageName();
-						if (!packageList.contains(packageName))
+						final List<RunningTaskInfo> runningTasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+
+						for (int i = 0; i < runningTasks.size(); i++)
 						{
-							new ApplicationTable(getApplicationContext()).insert(System.currentTimeMillis(), Encryptor.hash(packageName, getApplicationContext()), "launched");
-							Log.d(TAG, "Package " + packageName + " launched");
-							packageList.add(runningTasks.get(i).baseActivity.getPackageName());
+							String packageName = runningTasks.get(i).baseActivity.getPackageName();
+							if (!packageList.contains(packageName))
+							{
+								new ApplicationTable(getApplicationContext()).insert(System.currentTimeMillis(), Encryptor.hash(packageName), "launched");
+								Log.d(TAG, "Package " + packageName + " launched");
+								packageList.add(runningTasks.get(i).baseActivity.getPackageName());
+							}
 						}
 					}
 					//
@@ -94,13 +104,6 @@ public class RunningApplicationHandler extends Service
 		t.start();
 
 		return START_STICKY;
-	}
-
-	public static Collection<String> subtractSets(Collection<String> a, Collection<String> b)
-	{
-		Collection<String> result = new ArrayList<String>(b);
-		result.removeAll(a);
-		return result;
 	}
 
 	@Override

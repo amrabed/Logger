@@ -1,14 +1,5 @@
 package org.magnum.logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.magnum.logger.communication.messaging.SentMessageHandler;
-import org.magnum.logger.connectivity.devices.HeadsetHandler;
-import org.magnum.logger.connectivity.mobile.MobileHandler;
-import org.magnum.logger.user.browsing.BrowserHandler;
-import org.magnum.logger.user.files.FileHandler;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -24,9 +15,18 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import org.magnum.logger.communication.messaging.SentMessageHandler;
+import org.magnum.logger.connectivity.devices.HeadsetHandler;
+import org.magnum.logger.connectivity.mobile.MobileHandler;
+import org.magnum.logger.user.browsing.BrowserHandler;
+import org.magnum.logger.user.files.FileHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller extends Service
 {
-	final static String TAG = "CONTROLLER";
+	private static final String TAG = Controller.class.getCanonicalName();
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -48,25 +48,15 @@ public class Controller extends Service
 		return START_STICKY;
 	}
 
+	private static final String[] DIRECTORIES = {Environment.DIRECTORY_ALARMS, Environment.DIRECTORY_DCIM, Environment.DIRECTORY_DOWNLOADS, Environment.DIRECTORY_MOVIES, Environment.DIRECTORY_MUSIC, Environment.DIRECTORY_NOTIFICATIONS,
+			Environment.DIRECTORY_PICTURES, Environment.DIRECTORY_PODCASTS, Environment.DIRECTORY_RINGTONES};
+
 	private void monitorMobileCells()
 	{
 		TelephonyManager manager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-		manager.listen(new MobileHandler(getApplicationContext()), PhoneStateListener.LISTEN_CELL_LOCATION);
-	}
-
-	private void monitorFiles()
-	{
-		fileList.add(new FileHandler(getApplicationContext(), Environment.getRootDirectory().getAbsolutePath()));
-		fileList.add(new FileHandler(getApplicationContext(), Environment.getDataDirectory().getAbsolutePath()));
-		fileList.add(new FileHandler(getApplicationContext(), Environment.getDownloadCacheDirectory().getAbsolutePath()));
-		fileList.add(new FileHandler(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath()));
-		for (int i = 0; i < DIRECTORIES.length; i++)
+		if (manager != null)
 		{
-			fileList.add(new FileHandler(getApplicationContext(), Environment.getExternalStoragePublicDirectory(DIRECTORIES[i]).getAbsolutePath()));
-		}
-		for (FileHandler handler : fileList)
-		{
-			handler.startWatching();
+			manager.listen(new MobileHandler(getApplicationContext()), PhoneStateListener.LISTEN_CELL_LOCATION);
 		}
 	}
 
@@ -84,20 +74,29 @@ public class Controller extends Service
 
 	}
 
+	private void monitorFiles()
+	{
+		fileList.add(new FileHandler(getApplicationContext(), Environment.getRootDirectory().getAbsolutePath()));
+		fileList.add(new FileHandler(getApplicationContext(), Environment.getDataDirectory().getAbsolutePath()));
+		fileList.add(new FileHandler(getApplicationContext(), Environment.getDownloadCacheDirectory().getAbsolutePath()));
+		fileList.add(new FileHandler(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath()));
+		for (String directory : DIRECTORIES)
+		{
+			fileList.add(new FileHandler(getApplicationContext(), Environment.getExternalStoragePublicDirectory(directory).getAbsolutePath()));
+		}
+		for (FileHandler handler : fileList)
+		{
+			handler.startWatching();
+		}
+	}
+
 	private void monitorOutgoingMessages()
 	{
 		// Up to ICS
 		getApplicationContext().getContentResolver().registerContentObserver(Uri.parse("content://sms/sent"), true, new SentMessageHandler(getApplicationContext(), new Handler()));
 		// Jelly Beans
-		// TODO Repeated calls
+		// TODO: Handle repeated calls
 		getApplicationContext().getContentResolver().registerContentObserver(Uri.parse("content://mms-sms/conversations_messages?simple=false"), true, new SentMessageHandler(getApplicationContext(), new Handler()));
-	}
-
-	private void scheduleSync()
-	{
-		PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, new Intent(this, SyncService.class), 0);
-		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_HOUR, pendingIntent);
 	}
 
 	@Override
@@ -106,7 +105,14 @@ public class Controller extends Service
 		return null;
 	}
 
-	final static String DIRECTORIES[] = { Environment.DIRECTORY_ALARMS, Environment.DIRECTORY_DCIM, Environment.DIRECTORY_DOWNLOADS, Environment.DIRECTORY_MOVIES, Environment.DIRECTORY_MUSIC, Environment.DIRECTORY_NOTIFICATIONS,
-			Environment.DIRECTORY_PICTURES, Environment.DIRECTORY_PODCASTS, Environment.DIRECTORY_RINGTONES };
+	private void scheduleSync()
+	{
+		PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, new Intent(this, SyncService.class), 0);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		if (alarmManager != null)
+		{
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_HOUR, pendingIntent);
+		}
+	}
 	static List<FileHandler> fileList = new ArrayList<FileHandler>();
 }

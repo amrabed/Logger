@@ -1,14 +1,14 @@
 package org.magnum.logger.communication.messaging;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class MessageTable extends Database
 {
 	private static final String TABLE_NAME = "Messages";
-	private static final String COLUMN_NAMES[] = { "Time", "Number", "Received" };
+	private static final String[] COLUMN_NAMES = {"Time", "Number", "Received"};
 
 	public MessageTable(Context context)
 	{

@@ -1,7 +1,5 @@
 package org.magnum.logger;
 
-import java.util.Random;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,22 +19,21 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Random;
+
 public class MapActivity extends FragmentActivity implements OnMapClickListener
 {
-
-	private static int NumberOfClicks = 0;
-	private static String TAG = "map";
+	private static final String TAG = MapActivity.class.getCanonicalName();
+	private int numberOfClicks = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_map);
 		try
 		{
-
-			// setContentView(R.layout.activity_map);
-
-			// TODO: handle when not connected to internet
+			// TODO: Should handle when not connected to the internet
 			SupportMapFragment fragment = SupportMapFragment.newInstance(getOptions());
 			getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment, TAG).commit();
 			displayDialog(this);
@@ -74,9 +71,11 @@ public class MapActivity extends FragmentActivity implements OnMapClickListener
 		try
 		{
 			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-			options.mapType(GoogleMap.MAP_TYPE_NORMAL).camera(new CameraPosition.Builder().target(new LatLng(location.getLatitude(), location.getLongitude())).zoom(10).build()).zoomControlsEnabled(true);
-
+			if (locationManager != null)
+			{
+				Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				options.mapType(GoogleMap.MAP_TYPE_NORMAL).camera(new CameraPosition.Builder().target(new LatLng(location.getLatitude(), location.getLongitude())).zoom(10).build()).zoomControlsEnabled(true);
+			}
 		}
 		catch (Exception e)
 		{
@@ -89,7 +88,7 @@ public class MapActivity extends FragmentActivity implements OnMapClickListener
 	@Override
 	public void onBackPressed()
 	{
-		if (NumberOfClicks < 3)
+		if (numberOfClicks < 3)
 		{
 			displayDialog(this);
 			return;
@@ -104,13 +103,16 @@ public class MapActivity extends FragmentActivity implements OnMapClickListener
 		try
 		{
 			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-			for (; NumberOfClicks < 3; NumberOfClicks++)
+			if (locationManager != null)
 			{
-				// User did not select three points
-				// Select random points
-				LatLng location = new LatLng(last.getLatitude() + new Random(System.currentTimeMillis()).nextInt(10) - 5, last.getLongitude() + new Random(System.currentTimeMillis()).nextInt(10) - 5);
-				setPreferences(location);
+				Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				for (; numberOfClicks < 3; numberOfClicks++)
+				{
+					// User did not select three points
+					// Select random points
+					LatLng location = new LatLng(last.getLatitude() + new Random(System.currentTimeMillis()).nextInt(10) - 5, last.getLongitude() + new Random(System.currentTimeMillis()).nextInt(10) - 5);
+					setPreferences(location);
+				}
 			}
 		}
 		catch (Exception e)
@@ -124,7 +126,7 @@ public class MapActivity extends FragmentActivity implements OnMapClickListener
 	{
 		try
 		{
-			NumberOfClicks++;
+			numberOfClicks++;
 			((SupportMapFragment) getSupportFragmentManager().findFragmentByTag(TAG)).getMap().addMarker(new MarkerOptions().position(location));
 			setPreferences(location);
 		}
@@ -139,10 +141,11 @@ public class MapActivity extends FragmentActivity implements OnMapClickListener
 	{
 		try
 		{
-			String lng = "Lng" + NumberOfClicks, lat = "Lat" + NumberOfClicks;
+			String lng = "Lng" + numberOfClicks;
+			String lat = "Lat" + numberOfClicks;
 			PreferenceManager.getDefaultSharedPreferences(this).edit().putFloat(lng, (float) location.longitude).commit();
 			PreferenceManager.getDefaultSharedPreferences(this).edit().putFloat(lat, (float) location.latitude).commit();
-			if (NumberOfClicks >= 3)
+			if (numberOfClicks >= 3)
 			{
 				Location l3 = new Location(LocationManager.NETWORK_PROVIDER);
 				l3.setLatitude(location.latitude);

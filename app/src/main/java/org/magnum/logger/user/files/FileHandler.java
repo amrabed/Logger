@@ -1,17 +1,17 @@
 package org.magnum.logger.user.files;
 
-import org.magnum.logger.Encryptor;
-
 import android.content.Context;
 import android.os.FileObserver;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
 public class FileHandler extends FileObserver
 {
 
-	final static String TAG = "FILE";
-	Context context;
-	String path;
+	private static final String TAG = FileHandler.class.getCanonicalName();
+	private final Context context;
+	private final String path;
 
 	public FileHandler(Context context, String path)
 	{

@@ -1,8 +1,5 @@
 package org.magnum.logger.communication.email;
 
-import org.magnum.logger.Encryptor;
-import org.magnum.logger.communication.messaging.MessageTable;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -13,10 +10,13 @@ import android.os.Handler;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+import org.magnum.logger.communication.messaging.MessageTable;
+
 public class EmailHandler extends ContentObserver
 {
 
-	final static String TAG = "EMAIL";
+	private static final String TAG = EmailHandler.class.getCanonicalName();
 	private Context context;
 
 	public EmailHandler(Context context, Handler handler)
@@ -24,6 +24,7 @@ public class EmailHandler extends ContentObserver
 		super(handler);
 		this.context = context;
 	}
+
 	@Override
 	public void onChange(boolean selfChange)
 	{
@@ -34,15 +35,12 @@ public class EmailHandler extends ContentObserver
 			Cursor cur = context.getContentResolver().query(Uri.withAppendedPath(Email.CONTENT_LOOKUP_URI, null), null, null, null, null);
 			cur.moveToNext();
 			// TODO Change to match email data
-//			int type = cur.getInt(cur.getColumnIndex("type"));
-//			if (type == 2)
-			{
-				time = cur.getLong(cur.getColumnIndex("date"));// getTimestampMillis();
-				String id = Encryptor.encrypt(cur.getString(cur.getColumnIndex("address")), context);
-				new MessageTable(context).insert(time, id, 0);
+			time = cur.getLong(cur.getColumnIndex("date"));// getTimestampMillis();
+			String id = Encryptor.encrypt(cur.getString(cur.getColumnIndex("address")), context);
+			new MessageTable(context).insert(time, id, 0);
 
-				Log.d(TAG, "Email  from/to " + id + " at " + time);
-			}
+			Log.d(TAG, "Email  from/to " + id + " at " + time);
+
 		}
 		catch (Exception e)
 		{
@@ -63,16 +61,11 @@ public class EmailHandler extends ContentObserver
 
 			cur.moveToNext();
 			// TODO Change to match email data
-//			int type = cur.getInt(cur.getColumnIndex("type"));
-//			if (type == 2)
-			{
-				time = cur.getLong(cur.getColumnIndex("date"));
-				String id = Encryptor.encrypt(cur.getString(cur.getColumnIndex("address")), context);
-				new MessageTable(context).insert(time, id, 0);
+			time = cur.getLong(cur.getColumnIndex("date"));
+			String id = Encryptor.encrypt(cur.getString(cur.getColumnIndex("address")), context);
+			new MessageTable(context).insert(time, id, 0);
 
-				Log.d(TAG, "Email  from/to " + id + " at " + time);
-			}
-
+			Log.d(TAG, "Email  from/to " + id + " at " + time);
 		}
 		catch (Exception e)
 		{

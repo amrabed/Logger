@@ -1,17 +1,17 @@
 package org.magnum.logger.device.power;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class PowerTable extends Database
 {
 
 	private static final String TABLE_NAME = "Power";
-	private static final String COLUMN_NAMES[] = { "Time", "Status", "Level", "Plugged" };
+	private static final String[] COLUMN_NAMES = {"Time", "Status", "Level", "Plugged"};
 
-	public PowerTable(Context context)
+	PowerTable(Context context)
 	{
 		super(context);
 	}

@@ -1,9 +1,5 @@
 package org.magnum.logger.connectivity.bluetooth;
 
-import java.util.Set;
-
-import org.magnum.logger.Encryptor;
-
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,9 +7,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.magnum.logger.Encryptor;
+
+import java.util.Set;
+
 public class PairedDeviceReader extends Service
 {
-	final static String TAG = "BT_";
+	private static final String TAG = PairedDeviceReader.class.getCanonicalName();
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)

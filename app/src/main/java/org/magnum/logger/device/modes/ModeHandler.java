@@ -10,7 +10,7 @@ import android.util.Log;
 public class ModeHandler extends BroadcastReceiver
 {
 
-	final static String TAG = "MODE";
+	private static final String TAG = ModeHandler.class.getCanonicalName();
 
 	@Override
 	public void onReceive(Context context, Intent intent)
@@ -18,7 +18,7 @@ public class ModeHandler extends BroadcastReceiver
 		long time = System.currentTimeMillis();
 		try
 		{
-			if (intent.getAction().equals(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+			if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(intent.getAction()))
 			{
 				if (intent.getBooleanExtra("state", false))
 				{
@@ -31,10 +31,13 @@ public class ModeHandler extends BroadcastReceiver
 					Log.d(TAG, "Airplane Mode deactivated at " + time);
 				}
 			}
-			else if (intent.getAction().equals(Intent.ACTION_DOCK_EVENT))
+			else if (Intent.ACTION_DOCK_EVENT.equals(intent.getAction()))
 			{
 				UiModeManager uiMode = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
-				new ModeTable(context).insert(time, uiMode.getCurrentModeType() + 4);
+				if (uiMode != null)
+				{
+					new ModeTable(context).insert(time, uiMode.getCurrentModeType() + 4);
+				}
 				Log.d(TAG, "UI mode changed at " + time);
 			}
 			else

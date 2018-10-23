@@ -11,8 +11,8 @@ import android.util.Log;
 public class LocationHandler implements LocationListener
 {
 
-	final static String TAG = "LOCATION";
-	Context context;
+	private static final String TAG = LocationHandler.class.getCanonicalName();
+	private Context context;
 
 	public LocationHandler(Context context)
 	{
@@ -45,11 +45,12 @@ public class LocationHandler implements LocationListener
 		float[] distances = new float[3];
 		for (int i = 0; i < 3; i++)
 		{
-			String lng = "Lng" + (i + 1), lat = "Lat" + (i + 1);
+			final String lng = "Lng" + (i + 1);
+			final String lat = "Lat" + (i + 1);
 			// TODO: handle the case when the user didn't select 3 points
 			double longitude = PreferenceManager.getDefaultSharedPreferences(context).getFloat(lng, 0);
 			double latitude = PreferenceManager.getDefaultSharedPreferences(context).getFloat(lat, 0);
-			Location l = new Location(LocationManager.NETWORK_PROVIDER);
+			final Location l = new Location(LocationManager.NETWORK_PROVIDER);
 			l.setLatitude(latitude);
 			l.setLongitude(longitude);
 			distances[i] = location.distanceTo(l) / PreferenceManager.getDefaultSharedPreferences(context).getFloat("scale", 1);
@@ -57,22 +58,24 @@ public class LocationHandler implements LocationListener
 		return distances;
 	}
 
-	@Override
-	public void onProviderDisabled(String provider)
-	{
 
-	}
 
 	@Override
 	public void onProviderEnabled(String provider)
 	{
+		// Implementing method from interface
+	}
 
+	@Override
+	public void onProviderDisabled(String s)
+	{
+		// Implementing method from interface
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras)
 	{
-
+		// Implementing method from interface
 	}
 
 }

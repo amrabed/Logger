@@ -1,17 +1,17 @@
 package org.magnum.logger.connectivity.bluetooth;
 
-import org.magnum.logger.Database;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.magnum.logger.Database;
 
 public class BluetoothTable extends Database
 {
 
 	private static final String TABLE_NAME = "Bluetooth";
-	private static final String COLUMN_NAMES[] = { "Time", "Name", "Address", "Class",  "Change" };
+	private static final String[] COLUMN_NAMES = {"Time", "Name", "Address", "Class", "Change"};
 
-	public BluetoothTable(Context context)
+	BluetoothTable(Context context)
 	{
 		super(context);
 	}
