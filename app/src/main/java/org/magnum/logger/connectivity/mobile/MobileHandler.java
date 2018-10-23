@@ -58,40 +58,4 @@ public class MobileHandler extends PhoneStateListener
 			Log.e(TAG, e.toString());
 		}
 	}
-
-	// @TargetApi(17)
-	// @Override
-	// public void onCellInfoChanged(List<CellInfo> cellInfo)
-	// {
-	// long time = System.currentTimeMillis();
-	// int id;
-	// try
-	// {
-	// ConnectivityManager mgr = (ConnectivityManager)
-	// context.getSystemService(Context.CONNECTIVITY_SERVICE);
-	// NetworkInfo info = mgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-	// int type = info.getSubtype();
-	// if (type == TelephonyManager.NETWORK_TYPE_LTE)
-	// {
-	// CellInfoLte lte = (CellInfoLte) cellInfo.get(0);
-	// id = lte.getCellIdentity().getCi();
-	// }
-	// else if (type == TelephonyManager.NETWORK_TYPE_CDMA)
-	// {
-	// CellInfoCdma cdma = (CellInfoCdma) cellInfo.get(0);
-	// id = cdma.getCellIdentity().getBasestationId();
-	// }
-	// else
-	// {
-	// CellInfoGsm gsm = (CellInfoGsm) cellInfo.get(0);
-	// id = gsm.getCellIdentity().getCid();
-	// }
-	// new MobileTable(context).insert(time, id, info.getSubtypeName());
-	//
-	// }
-	// catch (Exception e)
-	// {
-	// Log.e(TAG, e.toString());
-	// }
-	// }
 }

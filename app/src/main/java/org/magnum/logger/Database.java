@@ -43,7 +43,6 @@ public abstract class Database extends SQLiteOpenHelper
 		CallTable.create(db);
 		EmailTable.create(db);
 		DeviceTable.create(db);
-		//EventTable.create(db);
 		FileTable.create(db);
 		LocationTable.create(db);
 		MobileTable.create(db);
@@ -52,17 +51,6 @@ public abstract class Database extends SQLiteOpenHelper
 		MessageTable.create(db);
 		WifiTable.create(db);
 	}
-
-//	public void create(SQLiteDatabase db)
-//	{
-//		String statement = "CREATE TABLE IF NOT EXISTS " + getTableName() + " ( ";
-//		for (String column : getColumnNames())
-//		{
-//			statement += column + " INTEGER NOT NULL, ";
-//		}
-//		statement += "\b\b )";
-//		db.execSQL(statement);
-//	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)

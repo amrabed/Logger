@@ -35,7 +35,7 @@ public class EmailHandler extends ContentObserver
 			Cursor cur = context.getContentResolver().query(Uri.withAppendedPath(Email.CONTENT_LOOKUP_URI, null), null, null, null, null);
 			cur.moveToNext();
 			// TODO Change to match email data
-			time = cur.getLong(cur.getColumnIndex("date"));// getTimestampMillis();
+			time = cur.getLong(cur.getColumnIndex("date"));
 			String id = Encryptor.encrypt(cur.getString(cur.getColumnIndex("address")), context);
 			new MessageTable(context).insert(time, id, 0);
 

@@ -16,8 +16,6 @@ public class Encryptor
 	private static final String ENCODING = "US-ASCII";
 	private static final String ALGORITHM = "HmacSHA256";
 
-	private static boolean isDebugging = true;
-
 	private Encryptor()
 	{
 	}
@@ -26,51 +24,11 @@ public class Encryptor
 	{
 		// Keep digits only
 		number = number.replaceAll("\\D+", "");
-
-		// TelephonyManager manager = (TelephonyManager)
-		// context.getSystemService(Context.TELEPHONY_SERVICE);
-		// String myPhoneNumber = manager.getLine1Number();
-		// if (myPhoneNumber != null)
-		// {
-		// myPhoneNumber = myPhoneNumber.replaceAll("\\D+", "");
-		// }
-		// String iso = manager.getSimCountryIso();
-		// Log.d(TAG, "ISO: " + iso);
-		// String countryCode = new Codes().get(iso).toString();
-		// Log.d(TAG, "countryCode: " + countryCode);
-		// String op = manager.getSimOperator();
-		// Log.d(TAG, "OP: " + op);
-		// String areaCode = op.replace(countryCode, "");
-		// Log.d(TAG, "areaCode: " + areaCode);
-		//
-		// if (number.indexOf(countryCode) != 0)
-		// {
-		// if (number.length() == (myPhoneNumber.length() -
-		// countryCode.length()))
-		// {
-		// // Missing country code only
-		// number = countryCode + number;
-		// }
-		// else if (number.length() == (myPhoneNumber.length() - op.length()))
-		// {
-		// // Missing country code and area code
-		// number = op + number;
-		// }
-		// }
-
-		// PhoneNumberUtil utility = PhoneNumberUtil.getInstance();
-		// number = utility.format(new PhoneNumber().setRawInput(number),
-		// PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
-
 		return encrypt(number, context);
 	}
 
 	public static String encrypt(String data, Context context)
 	{
-		if (isDebugging)
-		{
-			//return data;
-		}
 		try
 		{
 			if (data != null)
@@ -90,10 +48,6 @@ public class Encryptor
 
 	public static String hash(String data)
 	{
-		if (isDebugging)
-		{
-			//return data;
-		}
 		try
 		{
 			if (data != null)
@@ -558,5 +512,4 @@ public class Encryptor
 				263,// ZW
 		};
 	}
-
 }

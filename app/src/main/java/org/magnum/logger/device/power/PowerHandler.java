@@ -16,8 +16,6 @@ public class PowerHandler extends BroadcastReceiver
 	{
 		try
 		{
-//			intent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
 			long time = System.currentTimeMillis();
 			if (intent != null)
 			{

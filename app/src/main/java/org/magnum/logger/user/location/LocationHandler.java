@@ -25,10 +25,6 @@ public class LocationHandler implements LocationListener
 		long time = System.currentTimeMillis();
 		try
 		{
-			// LocationManager locationManager = (LocationManager)
-			// context.getSystemService(Context.LOCATION_SERVICE);
-			// Location lastLocation =
-			// locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			float[] distances = getDistances(location);
 			new LocationTable(context).insert(time, distances[0], distances[1], distances[2]);
 			Log.d(TAG, "Location changed at " + time);

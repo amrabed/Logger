@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Xtract
 {
@@ -25,6 +27,8 @@ public class Xtract
 	private static final String LOCATION = "location";
 
 	private static final String OUTPUT = "./output/";
+
+	private static final Logger logger = Logger.getGlobal();
 
 	public static void main(String[] args)
 	{
@@ -68,7 +72,7 @@ public class Xtract
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage());
 		}
 	}
 
@@ -169,7 +173,7 @@ public class Xtract
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage());
 		}
 	}
 
@@ -210,7 +214,7 @@ public class Xtract
 		}
 		catch (NumberFormatException | IOException e)
 		{
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage());
 		}
 	}
 
@@ -224,7 +228,10 @@ public class Xtract
 		if (items.length < 2 || "".equals(items[1])) return true;
 		if (fileName.contains(LOCATION))
 		{
-			return items[1].equals(items[2]) && items[2].equals(items[3]);
+			if (items[1].equals(items[2]) && items[2].equals(items[3]))
+			{
+				return true;
+			}
 		}
 		else if (fileName.contains(POWER))
 		{

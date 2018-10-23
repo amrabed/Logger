@@ -40,19 +40,6 @@ public class RunningApplicationHandler extends Service
 					final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 					// TODO not working properly
 
-//					List<RecentTaskInfo> tasks = activityManager.getRecentTasks(Integer.MAX_VALUE, 2);
-//
-//					for (RecentTaskInfo task : tasks)
-//					{
-//						String packageName = task.origActivity.getPackageName();
-//						if (!packageList.contains(packageName))
-//						{
-//							new ApplicationTable(getApplicationContext()).insert(System.currentTimeMillis(), packageName, "LAUNCHED");
-//							Log.d(TAG, "Package " + packageName + " launched");
-//							packageList.add(packageName);
-//						}
-//					}
-//
 					if (activityManager != null)
 					{
 						final List<RunningTaskInfo> runningTasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
@@ -68,32 +55,6 @@ public class RunningApplicationHandler extends Service
 							}
 						}
 					}
-					//
-					// List<RunningAppProcessInfo> procInfos =
-					// activityManager.getRunningAppProcesses();
-					// for (int i = 0; i < procInfos.size(); i++)
-					// {
-					//
-					// ArrayList<String> runningPkgs = new
-					// ArrayList<String>(Arrays.asList(procInfos.get(i).pkgList));
-					//
-					// Collection<String> diff = subtractSets(runningPkgs,
-					// packageList);
-					//
-					// if (diff != null)
-					// {
-					// packageList.removeAll(diff);
-					// }
-					// }
-					//
-					// for(String appId: packageList)
-					// {
-					// new
-					// ApplicationTable(getApplicationContext()).insert(System.currentTimeMillis(),
-					// appId, "LAUNCHED");
-					// Log.d(TAG, "Package " + appId + " launched");
-					// }
-
 				}
 				catch (Exception e)
 				{
