@@ -1,5 +1,10 @@
+[![Build Status](https://travis-ci.org/amrabed/Logger.svg?branch=master)](https://travis-ci.org/amrabed/Logger)
+[![Code Quality](https://sonarcloud.io/api/project_badges/measure?project=Logger&metric=alert_status)](https://sonarcloud.io/dashboard?id=Logger)
+[![Known Vulnerabilities](https://snyk.io/test/github/amrabed/Logger/badge.svg?targetFile=app%2Fbuild.gradle)](https://snyk.io/test/github/amrabed/Logger?targetFile=app%2Fbuild.gradle)
+[![GitHub issues](https://img.shields.io/github/issues/amrabed/Logger.svg)](https://github.com/amrabed/Logger/issues)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 # Logger
-[![Known Vulnerabilities](https://snyk.io/test/github/amrabed/Logger/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/amrabed/Logger?targetFile=pom.xml)
 
 > This application was created as part of my research at Virginia Tech. The application and the whole project is no longer active. Files of the project are left here for legacy reasons.
 
