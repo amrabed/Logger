@@ -26,7 +26,7 @@ public class ApplicationHandler extends BroadcastReceiver
 				Uri data = intent.getData();
 				if (data != null)
 				{
-					String appId = Encryptor.hash(data.getSchemeSpecificPart(), context);
+					String appId = Encryptor.hash(data.getSchemeSpecificPart());
 					new ApplicationTable(context).insert(time, appId, action);
 					Log.d(TAG, "Package " + appId + " " + change);
 				}
